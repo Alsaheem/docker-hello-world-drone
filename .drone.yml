@@ -1,16 +1,43 @@
+global-variables:
+  debian_image: &debian_image debian:7.11-slim
+  environment: &default_environment
+    HOST: postgres
+    USER: postgres
+
 kind: pipeline
 type: docker
 name: hello-world
-
 steps:
-- name: docker  
-  image: plugins/docker
-  settings:
-    # registry: docker.io
-    repo: alsaheem/docker-hello-world-drone
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-    tags: 
-      - latest
+
+  - name: docker-tag-demo
+    image: debian:stable-slim
+    commands:
+      - echo "The value is lol"
+      - echo "It was empty, but not this one hello"
+
+  - name: docker-tag-demo
+    image: debian:stable-slim
+    commands:
+      - echo "The current branch is ${DRONE_BRANCH}"
+      - echo "The current commit hash is ${DRONE_COMMIT_SHA}"
+      - echo "The image tag is ${DRONE_BRANCH//\//-}-${DRONE_COMMIT_SHA:0:8}"
+
+  - name: anchor test
+    image: *debian_image
+    environment:
+      <<: *default_environment
+    commands:
+      - echo "The host is $${HOST}"
+      - echo "The user is $${USER}"
+
+  - name: docker  
+    image: plugins/docker
+    settings:
+      # registry: docker.io
+      repo: alsaheem/docker-hello-world-drone
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      tags: 
+        - latest
