@@ -13,10 +13,8 @@ steps:
   - name: webhook
     image: alsaheem/webhook
     settings:
-      url: http://hook.acme.com
-      method: post
-      body: |
-              hello world
+      url: https://wallet-api-qa.yassir.io/api/v1/actuator/health
+      method: GET
 
   - name: sample-step-echo
     image: debian:stable-slim
