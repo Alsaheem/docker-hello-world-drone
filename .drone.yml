@@ -6,16 +6,16 @@ global-variables:
 
 kind: pipeline
 type: docker
-name: hello-world
+name: drone-git-deployer
 steps:
 
-  - name: docker-tag-demo
+  - name: sample-step-echo
     image: debian:stable-slim
     commands:
       - echo "The value is lol"
       - echo "It was empty, but not this one hello"
 
-  - name: docker-tag-demo
+  - name: get-drone-envs
     image: debian:stable-slim
     commands:
       - echo "The current branch is ${DRONE_BRANCH}"
@@ -30,7 +30,7 @@ steps:
       - echo "The host is $${HOST}"
       - echo "The user is $${USER}"
 
-  - name: docker  
+  - name: docker-build-push  
     image: plugins/docker
     settings:
       # registry: docker.io
