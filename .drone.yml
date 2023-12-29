@@ -13,20 +13,20 @@ steps:
   - name: test-drone-plugin-bash
     image: alsaheem/webhook
     settings:
-      url: https://wallet-api-qa.yassir.io/api/v1/actuator/health
+      url: https://wallet-api-dev.yassir.io/api/v1/actuator/health
       method: GET
 
   - name: test-drone-plugin-python
     image: alsaheem/healthchecker # public docker image
     settings:
-      health_url: https://wallet-api-qa.yassir.io/api/v1/actuator/health
+      health_url: https://wallet-healthcheck-dev.yassir.io/api/v1/actuator/health
       pass_num: 20
 
   - name: sample-step-echo
     image: debian:stable-slim
     commands:
-      - echo "The value is lol"
-      - echo "It was empty, but not this one hello"
+      - echo "The world is just a big ball"
+      - echo "It was empty, but now it's not"
   
   - name: alpine test
     image: alpine
